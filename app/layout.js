@@ -4,6 +4,7 @@ import { Outfit } from "next/font/google";
 import "./globals.css";
 import Starfield from "@/components/Starfield";
 import Footer from "@/components/Footer";
+import { BackgroundProvider } from "@/components/BackgroundContext";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -21,10 +22,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={outfit.variable}>
-        <Starfield />
-        <Navbar />
-        {children}
-        <Footer />
+        <BackgroundProvider>
+          <Starfield />
+          <Navbar />
+          {children}
+          <Footer />
+        </BackgroundProvider>
       </body>
     </html>
   );
