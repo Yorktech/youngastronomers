@@ -1,14 +1,14 @@
 import Link from 'next/link';
 
-import { Outfit } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Starfield from "@/components/Starfield";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundContext";
 
-const outfit = Outfit({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-space-grotesk",
 });
 
 export const metadata = {
@@ -21,7 +21,7 @@ import Navbar from "@/components/Navbar";
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={outfit.variable}>
+      <body className={`${spaceGrotesk.variable} ${spaceGrotesk.className} antialiased`}>
         <BackgroundProvider>
           <Starfield />
           <Navbar />
