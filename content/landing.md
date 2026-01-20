@@ -43,6 +43,9 @@ background:
 
 Start your journey into the cosmos.
 
+***
+---
+glass: true
 ---
 
 # Our Mission
@@ -50,12 +53,16 @@ Start your journey into the cosmos.
 Young Astronomers is a nationwide movement dedicated to putting the universe into the hands of the next generation. We believe that astronomy is more than just looking through a telescope; it is a gateway to physics, chemistry, and geology. By establishing independent, youth-led groups across the UK—from York to Bradford and beyond—we provide young people with their own identity and the autonomy to lead their own discovery. Our mission is to bridge the gap between today’s curiosity and tomorrow’s scientific breakthroughs, ensuring that the rich legacy of British amateur astronomy doesn’t just survive, but thrives through the energy of its newest explorers.
 
 
----
+***
 
 # Latest News
 
 APOD_SECTION
 
+***
+
+---
+glass: true
 ---
 
 # Resources

@@ -3,9 +3,9 @@
 export default function SlideDeck({ slides }) {
     return (
         <div className="snap-y snap-mandatory h-screen w-screen h-[100dvh] overflow-y-scroll scroll-smooth bg-transparent text-white">
-            {slides.map((slideContent, index) => (
+            {slides.map((slide, index) => (
                 <div key={index} className="snap-start h-screen h-[100dvh] w-screen flex flex-col items-center justify-center p-4 md:p-8 relative border-b border-white/10">
-                    <Slide content={slideContent} />
+                    <Slide content={slide.content} meta={slide.meta} />
                 </div>
             ))}
         </div>
