@@ -2,6 +2,8 @@
 title: "Young Astronomers UK"
 description: "Vertical scrolling landing page"
 background:
+  scrollIndicator: true
+  flybys: true
   sun:
     visible: true
     color: "yellow"
@@ -36,10 +38,21 @@ background:
         speed: 0.3
         axis: "y"
         center: [0,0,-40]
+
+    - type: "cobra"
+      position: [10, -5, -20]
+      rotation: [0, 0, 0]
+      color: "orange"
+      orbit:
+        radius: 25
+        speed: 0.15
+        axis: "y"
+        center: [0,0,-40]
 ---
 
 # Young Astronomers UK
 ## Discover the Universe
+## Discover Science
 
 Start your journey into the cosmos.
 

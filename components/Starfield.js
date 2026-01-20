@@ -69,7 +69,7 @@ function MovingStars({ count = 2000 }) {
     });
 
     return (
-        <points ref={mesh}>
+        <points ref={mesh} renderOrder={-1}>
             <bufferGeometry>
                 <bufferAttribute
                     attach="attributes-position"
@@ -107,7 +107,8 @@ function RandomFlybys() {
             if (Math.random() > 0.7) return; // 30% chance per check
 
             const id = Math.random().toString(36).substr(2, 9);
-            const type = Math.random() > 0.5 ? 'viper' : 'saucer';
+            const types = ['viper', 'saucer', 'cobra'];
+            const type = types[Math.floor(Math.random() * types.length)];
 
             // Random start and end points
             const startX = Math.random() > 0.5 ? -80 : 80;
@@ -131,7 +132,7 @@ function RandomFlybys() {
                 control: [controlX, controlY, z],
                 startTime: Date.now(),
                 speed,
-                color: type === 'viper' ? 'orange' : 'lime'
+                color: type === 'viper' ? 'orange' : (type === 'cobra' ? 'cyan' : 'lime')
             };
 
             setFlybys(prev => [...prev, newFlyby]);
@@ -236,7 +237,7 @@ function Scene() {
     return (
         <>
             <MovingStars count={3000} />
-            <RandomFlybys />
+            {config.flybys !== false && <RandomFlybys />}
 
             {/* Dynamic Objects based on Config */}
             {config.sun && config.sun.visible !== false && (

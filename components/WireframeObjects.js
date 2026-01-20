@@ -12,8 +12,8 @@ function EliteObject({ geometry, color, position, rotation, scale }) {
     return (
         <group position={position} rotation={rotation} scale={scale}>
             {/* Occlusion Mesh (Black Solid) */}
-            <mesh geometry={geometry}>
-                <meshBasicMaterial color="black" polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
+            <mesh geometry={geometry} renderOrder={1}>
+                <meshBasicMaterial color="#020617" polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
             </mesh>
             {/* Wireframe Lines */}
             <lineSegments geometry={edges}>
@@ -24,77 +24,124 @@ function EliteObject({ geometry, color, position, rotation, scale }) {
 }
 
 export function WireframePlanet({ position, size = 5, color = "white", speed = 0.1 }) {
-    const meshRef = useRef();
+    const groupRef = useRef();
+    const geometry = useMemo(() => new THREE.SphereGeometry(size, 16, 16), [size]);
 
     useFrame((state, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.y += delta * speed;
-            meshRef.current.rotation.x += delta * (speed * 0.5);
+        if (groupRef.current) {
+            groupRef.current.rotation.y += delta * speed;
+            groupRef.current.rotation.x += delta * (speed * 0.5);
         }
     });
 
     return (
-        <mesh ref={meshRef} position={position}>
-            <sphereGeometry args={[size, 16, 16]} />
-            <meshBasicMaterial color={color} wireframe />
-        </mesh>
+        <group ref={groupRef} position={position}>
+            <EliteObject geometry={geometry} color={color} />
+        </group>
     );
 }
 
 export function RetroSun({ position, size = 15, color = "yellow" }) {
-    const meshRef = useRef();
+    const groupRef = useRef();
+    const sphereGeo = useMemo(() => new THREE.SphereGeometry(size, 12, 12), [size]);
+    const torusGeo = useMemo(() => new THREE.TorusGeometry(size * 1.5, 0.2, 8, 32), [size]);
 
     useFrame((state, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.y += delta * 0.05;
-            meshRef.current.rotation.z -= delta * 0.01;
+        if (groupRef.current) {
+            groupRef.current.rotation.y += delta * 0.05;
+            groupRef.current.rotation.z -= delta * 0.01;
         }
     });
 
     return (
-        <group ref={meshRef} position={position}>
-            <mesh>
-                <sphereGeometry args={[size, 12, 12]} />
-                <meshBasicMaterial color={color} wireframe />
-            </mesh>
-            <mesh rotation={[Math.PI / 2, 0, 0]}>
-                <torusGeometry args={[size * 1.5, 0.2, 8, 32]} />
-                <meshBasicMaterial color={color} wireframe />
-            </mesh>
+        <group ref={groupRef} position={position}>
+            <EliteObject geometry={sphereGeo} color={color} />
+            <EliteObject
+                geometry={torusGeo}
+                color={color}
+                rotation={[Math.PI / 2, 0, 0]}
+            />
         </group>
     );
+}
+
+function useCobraGeometry() {
+    return useMemo(() => {
+        const geometry = new THREE.BufferGeometry();
+
+        // Authentic Elite Cobra Mk III Vertices
+        // Wide, flat, hexagonal profile
+        const vertices = new Float32Array([
+            0, 0, 1.5,  // 0: Nose Tip
+            2.0, -0.2, -0.5,  // 1: Far Right Wingtip
+            -2.0, -0.2, -0.5,  // 2: Far Left Wingtip
+            0.8, 0.3, -0.2,  // 3: Upper Hull Mid-Right
+            -0.8, 0.3, -0.2,  // 4: Upper Hull Mid-Left
+            0.8, -0.4, -0.2,  // 5: Lower Hull Mid-Right
+            -0.8, -0.4, -0.2,  // 6: Lower Hull Mid-Left
+            1.2, 0.1, -1.2,  // 7: Rear Upper Right
+            -1.2, 0.1, -1.2,  // 8: Rear Upper Left
+            1.2, -0.2, -1.2,  // 9: Rear Lower Right
+            -1.2, -0.2, -1.2   // 10: Rear Lower Left
+        ]);
+
+        const indices = [
+            // Nose to Mid-section
+            0, 3, 4, 0, 4, 2, 0, 2, 6, 0, 6, 5, 0, 5, 1, 0, 1, 3,
+            // Top Surfaces
+            3, 7, 8, 3, 8, 4, 1, 7, 3, 2, 4, 8,
+            // Bottom Surfaces
+            5, 6, 10, 5, 10, 9, 1, 5, 9, 2, 10, 6,
+            // Side Edges
+            1, 9, 7, 2, 8, 10,
+            // Rear Engine Plate
+            7, 9, 10, 7, 10, 8
+        ];
+
+        geometry.setIndex(indices);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        geometry.computeVertexNormals();
+        return geometry;
+    }, []);
 }
 
 // Custom Geometry for the Viper Ship
 function useViperGeometry() {
     return useMemo(() => {
-        // Main Fuselage (Wedge)
-        const shape = new THREE.Shape();
-        shape.moveTo(0, 0);
-        shape.lineTo(0.5, -1);
-        shape.lineTo(1, 0); // Nose taper? 
-        // Actually lets simpler: Extrude a triangle for the nose/body
+        const geometry = new THREE.BufferGeometry();
 
-        // Define the cross-section of the back
-        const fuselageShape = new THREE.Shape();
-        fuselageShape.moveTo(-0.5, 0);
-        fuselageShape.lineTo(0.5, 0);
-        fuselageShape.lineTo(0.5, 1);
-        fuselageShape.lineTo(-0.5, 1);
-        fuselageShape.lineTo(-0.5, 0);
+        // Authentic Elite Viper Mk1 Vertices
+        const vertices = new Float32Array([
+            0, 0, 1.2,  // 0: Nose tip
+            0.6, 0.1, 0.2,  // 1: Top Right mid
+            -0.6, 0.1, 0.2,  // 2: Top Left mid
+            0.6, -0.2, 0.2,  // 3: Bottom Right mid
+            -0.6, -0.2, 0.2,  // 4: Bottom Left mid
+            0.4, 0.1, -1.0, // 5: Top Right rear
+            -0.4, 0.1, -1.0, // 6: Top Left rear
+            0.4, -0.1, -1.0, // 7: Bottom Right rear
+            -0.4, -0.1, -1.0  // 8: Bottom Left rear
+        ]);
 
-        // This is hard to model with just Shapes. Let's composite primitives.
-        // But for EliteObject we need a single Geometry to calculate edges nicely, 
-        // OR we just use multiple EliteObjects in a group.
+        // Faces defined to ensure EdgesGeometry draws the correct outlines
+        const indices = [
+            0, 1, 2, 0, 2, 4, 0, 4, 3, 0, 3, 1, // Nose
+            1, 5, 6, 1, 6, 2, 3, 4, 8, 3, 8, 7, // Top/Bottom
+            1, 3, 7, 1, 7, 5, 2, 6, 8, 2, 8, 4, // Sides
+            5, 7, 8, 5, 8, 6                     // Rear
+        ];
 
-        // Let's create a single merged BufferGeometry for the Viper to treat it as one solid object.
-        return null; // Logic moved to component to allow composition
+        geometry.setIndex(indices);
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        geometry.computeVertexNormals();
+        return geometry;
     }, []);
 }
 
 export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color = "cyan", type = "basic", orbit = null }) {
     const groupRef = useRef();
-
+    const viperGeo = useViperGeometry();
+    const cobraGeo = useCobraGeometry();
     useFrame((state, delta) => {
         if (groupRef.current) {
             const time = state.clock.getElapsedTime();
@@ -132,36 +179,18 @@ export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color
     const renderShipType = () => {
         switch (type) {
             case 'viper':
-                // Classic Wedge Shape
-                // Composition of multiple EliteObjects for parts
                 return (
-                    <group rotation={[0, Math.PI, 0]}>
-                        {/* Nose / Main Body */}
+                    // The original models face "forward" on Z, 
+                    // we rotate 180 (Math.PI) so they face the direction of travel
+                    <group >
                         <EliteObject
-                            geometry={new THREE.ConeGeometry(0.8, 4, 4)}
+                            geometry={viperGeo}
                             color={color}
-                            rotation={[Math.PI / 2, Math.PI / 4, 0]} // Rotate so flat side is down/up
-                        />
-                        {/* Engines (Side intakes) */}
-                        <EliteObject
-                            geometry={new THREE.BoxGeometry(0.8, 0.8, 2.5)}
-                            color={color}
-                            position={[0.8, 0, 0.5]}
-                        />
-                        <EliteObject
-                            geometry={new THREE.BoxGeometry(0.8, 0.8, 2.5)}
-                            color={color}
-                            position={[-0.8, 0, 0.5]} // moved back slightly relative to nose
-                        />
-                        {/* Top Fin (Optional, Viper Mk1 didn't have huge fin but reference has high back) */}
-                        <EliteObject
-                            geometry={new THREE.BoxGeometry(0.4, 0.6, 1.5)}
-                            color={color}
-                            position={[0, 0.6, 1]}
-                            rotation={[-0.2, 0, 0]} // Sloped
+                            position={[0, 0, 0]}
                         />
                     </group>
                 );
+
             case 'saucer':
                 return (
                     <group>
@@ -182,6 +211,16 @@ export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color
                             color={color}
                             position={[0, -0.35, 0]}
                             rotation={[Math.PI, 0, 0]}
+                        />
+                    </group>
+                );
+            case 'cobra':
+                return (
+                    <group >
+                        <EliteObject
+                            geometry={cobraGeo}
+                            color={color}
+                            position={[0, 0, 0]}
                         />
                     </group>
                 );

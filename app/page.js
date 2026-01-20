@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main>
       <BackgroundUpdater config={page.meta.background} />
-      <SlideDeck slides={page.slides} />
+      <SlideDeck slides={page.slides} pageMeta={page.meta} />
     </main>
   );
 }
