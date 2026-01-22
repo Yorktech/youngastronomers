@@ -11,6 +11,7 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex gap-4 md:gap-8 flex-wrap justify-center">
+                    <Link href="/" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Home</Link>
                     <Link href="/resources" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Resources</Link>
                     <Link href="/contact" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Contact</Link>
                     <Link href="/admin" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Admin</Link>

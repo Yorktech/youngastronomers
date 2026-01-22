@@ -65,6 +65,50 @@ export function RetroSun({ position, size = 15, color = "yellow" }) {
     );
 }
 
+function useGravityLensGeometry() {
+    return useMemo(() => {
+        const geometry = new THREE.BufferGeometry();
+        const vertices = [];
+        const indices = [];
+        const segments = 12; // Lower for that retro feel
+        const rings = 6;
+
+        // Create a warped grid (Gravity Well)
+        for (let r = 0; r <= rings; r++) {
+            const radius = r * 0.5;
+            // The "well" depth: further from center = flatter
+            const y = -2 / (radius + 0.5);
+
+            for (let s = 0; s < segments; s++) {
+                const theta = (s / segments) * Math.PI * 2;
+                vertices.push(
+                    Math.cos(theta) * radius,
+                    y,
+                    Math.sin(theta) * radius
+                );
+            }
+        }
+
+        // Build the grid lines
+        for (let r = 0; r < rings; r++) {
+            for (let s = 0; s < segments; s++) {
+                const current = r * segments + s;
+                const next = r * segments + (s + 1) % segments;
+                const above = (r + 1) * segments + s;
+
+                indices.push(current, next, above);
+                indices.push(next, (r + 1) * segments + (s + 1) % segments, above);
+            }
+        }
+
+        geometry.setIndex(indices);
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+        geometry.computeVertexNormals();
+        return geometry;
+    }, []);
+}
+
+
 function useCobraGeometry() {
     return useMemo(() => {
         const geometry = new THREE.BufferGeometry();
@@ -142,6 +186,7 @@ export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color
     const groupRef = useRef();
     const viperGeo = useViperGeometry();
     const cobraGeo = useCobraGeometry();
+    const gravityLensGeo = useGravityLensGeometry();
     useFrame((state, delta) => {
         if (groupRef.current) {
             const time = state.clock.getElapsedTime();
@@ -178,6 +223,23 @@ export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color
 
     const renderShipType = () => {
         switch (type) {
+
+            case 'gravity_lens':
+                // EliteObject uses EdgesGeometry which hides "smooth" edges. 
+                // For the gravity well grid, we want to see all segments (WireframeGeometry).
+                return (
+                    <group position={[0, 0, 0]}>
+                        {/* Occlusion Mesh */}
+                        <mesh geometry={gravityLensGeo} renderOrder={1}>
+                            <meshBasicMaterial color="#020617" polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
+                        </mesh>
+                        {/* Full Wireframe Grid */}
+                        <lineSegments>
+                            <wireframeGeometry args={[gravityLensGeo]} />
+                            <lineBasicMaterial color={color} />
+                        </lineSegments>
+                    </group>
+                );
             case 'viper':
                 return (
                     // The original models face "forward" on Z, 

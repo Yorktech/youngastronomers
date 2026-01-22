@@ -1,6 +1,6 @@
 ---
 title: "Young Astronomers UK"
-description: "Vertical scrolling landing page"
+description: ""
 background:
   scrollIndicator: true
   flybys: true
