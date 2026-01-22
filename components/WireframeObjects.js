@@ -70,14 +70,25 @@ function useGravityLensGeometry() {
         const geometry = new THREE.BufferGeometry();
         const vertices = [];
         const indices = [];
-        const segments = 12; // Lower for that retro feel
-        const rings = 6;
+        const segments = 24; // Increased for smoother circle
+        const rings = 12; // Increased for more grid density
 
         // Create a warped grid (Gravity Well)
         for (let r = 0; r <= rings; r++) {
-            const radius = r * 0.5;
-            // The "well" depth: further from center = flatter
-            const y = -2 / (radius + 0.5);
+            const radius = r * 0.8; // Wider stance
+            // The "well" depth: extreme curve for black hole effect
+            // r=0 is deep down, r=rings is flat
+
+            // Standard hyperbolic funnel: y = -1/x
+            let y = 0;
+            if (r === 0) {
+                y = -20; // Deep spike for singularity
+            } else {
+                y = -3 / (radius * 0.5);
+            }
+
+            // Clamp y so it doesn't go to infinity
+            y = Math.max(y, -20);
 
             for (let s = 0; s < segments; s++) {
                 const theta = (s / segments) * Math.PI * 2;
@@ -193,22 +204,42 @@ export function WireframeShip({ position, rotation = [0, 0, 0], scale = 1, color
 
             // Orbital Movement
             if (orbit) {
-                const { radius = 10, speed = 0.5, axis = 'y', center = [0, 0, 0] } = orbit;
-                const angle = time * speed;
+                const { type: orbitType = 'circle', radius = 10, speed = 0.5, axis = 'y', center = [0, 0, 0] } = orbit;
+
+                let currentRadius = radius;
+                let heightOffset = 0;
+                let angle = time * speed;
+
+                if (orbitType === 'spiral') {
+                    // Spiral inwards: radius decreases over time
+                    const cycleTime = 15;
+                    const progress = (time % cycleTime) / cycleTime; // 0 to 1
+
+                    currentRadius = radius * (1 - progress);
+                    angle = angle * (1 + progress * 2); // Speed up
+                    heightOffset = -20 * (progress * progress); // Fall down
+                }
 
                 let x = center[0];
                 let y = center[1];
                 let z = center[2];
 
                 if (axis === 'y') {
-                    x += Math.cos(angle) * radius;
-                    z += Math.sin(angle) * radius;
+                    x += Math.cos(angle) * currentRadius;
+                    z += Math.sin(angle) * currentRadius;
+                    y += heightOffset;
                 } else if (axis === 'x') {
-                    y += Math.cos(angle) * radius;
-                    z += Math.sin(angle) * radius;
+                    y += Math.cos(angle) * currentRadius;
+                    z += Math.sin(angle) * currentRadius;
+                    x += heightOffset;
                 } else {
-                    x += Math.cos(angle) * radius;
-                    y += Math.sin(angle) * radius;
+                    // Default generic or z-axis rotation logic if needed, 
+                    // though usually we rotate around Y. 
+                    // Let's keep the original fallback which was effectively 'z' rotation in plane XY?
+                    // Original code: x += cos, y += sin. That's rotation around Z.
+                    x += Math.cos(angle) * currentRadius;
+                    y += Math.sin(angle) * currentRadius;
+                    z += heightOffset;
                 }
 
                 groupRef.current.position.set(x, y, z);

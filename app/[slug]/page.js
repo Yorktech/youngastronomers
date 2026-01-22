@@ -1,6 +1,7 @@
 import { getPageContent } from '@/lib/content';
 import SlideDeck from '@/components/SlideDeck';
 import { notFound } from 'next/navigation';
+import BackgroundUpdater from '@/components/BackgroundUpdater';
 
 export default async function GenericPage({ params }) {
     const { slug } = await params;
@@ -12,7 +13,8 @@ export default async function GenericPage({ params }) {
 
     return (
         <main>
-            <SlideDeck slides={page.slides} />
+            <BackgroundUpdater config={page.meta.background} />
+            <SlideDeck slides={page.slides} pageMeta={page.meta} />
         </main>
     );
 }

@@ -9,6 +9,14 @@ background:
       position: [0, 0, -50]
       scale: 2.0
       color: "lime"
+    - type: "viper"
+      color: "red"
+      scale: 0.5
+      orbit:
+        type: "spiral"
+        radius: 30
+        speed: 1.5
+        center: [0, 0, -50]
 ---
 
 # Physics: The Engine of Astronomy
