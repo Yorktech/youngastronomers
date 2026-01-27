@@ -12,7 +12,7 @@ export default function Footer() {
                 <div className="flex gap-6 items-center">
                     <Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
                     <div className="flex gap-4 border-l border-white/20 pl-6">
-                        <a href="mailto:hello@youngastronomers.uk" className="hover:text-purple-400 transition-colors">
+                        <a href="mailto:hello@youngastronomersuk.science" className="hover:text-purple-400 transition-colors">
                             <Mail size={16} />
                         </a>
                         <a href="#" className="hover:text-blue-400 transition-colors">

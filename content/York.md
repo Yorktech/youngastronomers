@@ -21,4 +21,4 @@ Welcome to the York branch of Young Astronomers!
 
 ## Contact Us
 
-Email: york@youngastronomers.uk
+Email: york@youngastronomersuk.science
