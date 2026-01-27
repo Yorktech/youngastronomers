@@ -5,6 +5,8 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import * as THREE from "three";
 import { WireframePlanet, WireframeShip, RetroSun, WireframeHubble } from "./WireframeObjects";
 import { useBackground } from "./BackgroundContext";
+import { Physics, RigidBody, vec3 } from "@react-three/rapier";
+import { BlackHole } from "./BlackHole";
 
 function GenerateCircleTexture() {
     const size = 64;
@@ -231,10 +233,130 @@ function TransientShip({ type, start, end, control, speed, color, onComplete }) 
     )
 }
 
-function Scene() {
-    const { config } = useBackground();
+function GravityDebris({ blackHolePos = [0, 0, 0], strength = 50 }) {
+    const body = useRef();
+    const startPos = useMemo(() => [
+        (Math.random() - 0.5) * 60,
+        (Math.random() - 0.5) * 60,
+        (Math.random() - 0.5) * 20 - 20
+    ], []);
+
+    // Random initial velocity to start the spiral
+    const startVel = useMemo(() => {
+        return [
+            (Math.random() - 0.5) * 2,
+            (Math.random() - 0.5) * 2,
+            0
+        ]
+    }, []);
+
+    useEffect(() => {
+        if (body.current) {
+            body.current.setLinvel({ x: startVel[0], y: startVel[1], z: startVel[2] });
+        }
+    }, [startVel]);
+
+    useFrame((state, delta) => {
+        if (!body.current) return;
+
+        const translation = body.current.translation();
+        const bodyPos = new THREE.Vector3(translation.x, translation.y, translation.z);
+        const center = new THREE.Vector3(...blackHolePos);
+
+        const diff = new THREE.Vector3().subVectors(center, bodyPos);
+        const dist = diff.length();
+
+        // Check for efficient respawn if lost in space
+        if (dist > 150) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 60 + Math.random() * 20;
+            const rx = Math.cos(angle) * radius;
+            const ry = Math.sin(angle) * radius;
+
+            body.current.setTranslation({
+                x: rx,
+                y: ry,
+                z: -20 + (Math.random() - 0.5) * 10
+            }, true);
+            body.current.setLinvel({ x: 0, y: 0, z: 0 }, true);
+            return;
+        }
+
+        if (dist > 1.5) {
+            // 1. Attraction Force (Pull towards center)
+            const dir = diff.clone().normalize();
+
+            // Significant boost to gravity strength and linear fallout (1/r) for better long-range pull
+            // strength 50 -> 500 / dist roughly. 
+            // Previous was 1/r^2 which is realistic but weak at distance.
+            const attractionForce = (strength * 3) / (dist + 0.1);
+            const finalAttraction = Math.min(attractionForce, 100);
+
+            // 2. Tangential Force (Spiral)
+            const up = new THREE.Vector3(0, 1, 0);
+            const tangent = new THREE.Vector3().crossVectors(dir, up).normalize();
+
+            const swirlStrength = 5;
+            const finalTangent = tangent.multiplyScalar(swirlStrength * delta);
+
+            const totalImpulse = dir.multiplyScalar(finalAttraction * delta).add(finalTangent);
+
+            body.current.applyImpulse(totalImpulse, true);
+        } else {
+            // Reset if too close (sucked in)
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 70 + Math.random() * 20;
+            const rx = Math.cos(angle) * radius;
+            const ry = Math.sin(angle) * radius;
+
+            body.current.setTranslation({
+                x: rx,
+                y: ry,
+                z: -20 + (Math.random() - 0.5) * 10
+            }, true);
+
+            // Initial velocity
+            const speed = 2;
+            body.current.setLinvel({
+                x: -ry / radius * speed,
+                y: rx / radius * speed,
+                z: 0
+            }, true);
+        }
+    });
+
+    const debrisType = useMemo(() => Math.random() > 0.95 ? 'ship' : 'rock', []); // 5% chance of ship
+    const debrisScale = useMemo(() => Math.random() * 0.7 + 0.2, []); // 0.2 to 0.9 size
 
     return (
+        <RigidBody
+            ref={body}
+            position={startPos}
+            colliders="ball"
+            restitution={0.5}
+            linearDamping={1.0} // Higher damping to stop them flying off too easily
+            angularDamping={0.5}
+        >
+            {debrisType === 'ship' ? (
+                <group scale={debrisScale * 0.5}>
+                    <WireframeShip type="basic" color="cyan" />
+                </group>
+            ) : (
+                <mesh>
+                    <icosahedronGeometry args={[debrisScale, 0]} />
+                    <meshStandardMaterial color="white" wireframe />
+                </mesh>
+            )}
+        </RigidBody>
+    );
+}
+
+function Scene() {
+    const { config } = useBackground();
+    const physicsEnabled = config.physics === true;
+
+    // Normal non-physics scene elements
+    const StandardElements = () => (
         <>
             <MovingStars count={3000} />
             {config.flybys !== false && <RandomFlybys />}
@@ -259,17 +381,8 @@ function Scene() {
             ))}
 
             {config.ships?.map((ship, idx) => {
-                if (ship.type === 'hubble') {
-                    return <WireframeHubble
-                        key={`ship-${idx}`}
-                        position={ship.position}
-                        rotation={ship.rotation}
-                        scale={ship.scale}
-                        color={ship.color}
-                        orbit={ship.orbit}
-                    />
-                }
-                return <WireframeShip
+                const ShipComp = ship.type === 'hubble' ? WireframeHubble : WireframeShip;
+                return <ShipComp
                     key={`ship-${idx}`}
                     position={ship.position || [-15, 10, -20]}
                     rotation={ship.rotation || [0.2, 0.5, 0]}
@@ -280,7 +393,28 @@ function Scene() {
                 />
             })}
         </>
-    )
+    );
+
+    if (physicsEnabled) {
+        return (
+            <Physics gravity={[0, 0, 0]}>
+                <MovingStars count={3000} /> {/* Stars background always present */}
+
+                {config.blackHole && (
+                    <BlackHole position={config.blackHole.position || [0, 0, -20]} strength={config.blackHole.strength} />
+                )}
+
+                {/* Spawn Debris */}
+                {Array.from({ length: config.debris?.count || 10 }).map((_, i) => (
+                    <GravityDebris key={i} blackHolePos={config.blackHole?.position || [0, 0, -20]} strength={config.blackHole?.strength || 50} />
+                ))}
+
+                {/* Still include standard elements if desired, but they won't interact physically unless they are RigidBodies */}
+            </Physics>
+        );
+    }
+
+    return <StandardElements />;
 }
 
 export default function Starfield() {
@@ -291,6 +425,8 @@ export default function Starfield() {
                 gl={{ antialias: true, alpha: true }}
                 dpr={[1, 2]}
             >
+                <ambientLight intensity={0.5} />
+                <directionalLight position={[10, 10, 5]} intensity={1} />
                 <Scene />
             </Canvas>
         </div>

@@ -4,37 +4,37 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBody, CuboidCollider, RapierRigidBody } from "@react-three/rapier";
 import { useRef, useMemo } from "react";
 import * as THREE from "three";
+import { useGravityLensGeometry } from "./WireframeObjects";
 
 export function BlackHole({ position = [0, 0, 0], strength = 50 }) {
     const meshRef = useRef();
-
-    // Visuals for the black hole
-    // Accretion disk
-    const diskGeometry = useMemo(() => new THREE.TorusGeometry(3, 0.5, 16, 100), []);
-    const diskMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: 'orange', wireframe: true }), []);
-
-    // Event Horizon
-    const sphereGeometry = useMemo(() => new THREE.SphereGeometry(1.5, 32, 32), []);
-    const sphereMaterial = useMemo(() => new THREE.MeshBasicMaterial({ color: 'black' }), []);
+    const geometry = useGravityLensGeometry();
+    const color = "lime"; // Matching original color from physics.md
 
     useFrame((state, delta) => {
+        // Spin the funnel/black hole itself to show the twisting of spacetime
+        // The funnel's symmetry axis is Y, so we spin around Y.
         if (meshRef.current) {
-            meshRef.current.rotation.z += delta * 0.5;
-            meshRef.current.rotation.x += delta * 0.2;
+            meshRef.current.rotation.y -= delta * 0.3;
         }
     });
 
-    // We will handle gravity in a parent component or via a custom hook that iterates bodies, 
-    // OR we can make this component a "sensor" that applies forces to things entering it.
-    // For a "suck everything" effect, usually we iterate over all rigid bodies in the scene.
-    // simpler approach: The objects themselves should be attracted to the BH.
-    // But we want the BH to be the source. 
-
     return (
-        <group position={position}>
-            <mesh ref={meshRef} geometry={diskGeometry} material={diskMaterial} />
-            <mesh geometry={sphereGeometry} material={sphereMaterial} />
-            {/* Sensor collider to detect things nearby? Or just visual? */}
+        <group position={position} >
+            {/* Tilt Group - Fixes the viewing angle */}
+            <group rotation={[2.0, 0, 1]} scale={1.5}>
+                {/* Spinning Group - Spins the funnel around its axis */}
+                <group ref={meshRef}>
+                    {/* Gravity Well Funnel */}
+                    <mesh geometry={geometry} renderOrder={1}>
+                        <meshBasicMaterial color="#020617" opacity={0.8} transparent polygonOffset polygonOffsetFactor={1} polygonOffsetUnits={1} />
+                    </mesh>
+                    <lineSegments>
+                        <wireframeGeometry args={[geometry]} />
+                        <lineBasicMaterial color={color} opacity={0.5} transparent />
+                    </lineSegments>
+                </group>
+            </group>
         </group>
     );
 }

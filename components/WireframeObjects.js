@@ -65,7 +65,7 @@ export function RetroSun({ position, size = 15, color = "yellow" }) {
     );
 }
 
-function useGravityLensGeometry() {
+export function useGravityLensGeometry() {
     return useMemo(() => {
         const geometry = new THREE.BufferGeometry();
         const vertices = [];
