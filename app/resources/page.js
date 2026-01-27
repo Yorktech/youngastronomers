@@ -10,9 +10,8 @@ export default function ResourcesPage() {
                 fontSize: '3rem',
                 marginBottom: '3rem',
                 textAlign: 'center',
-                background: 'linear-gradient(to right, #fff, #a0a0b0)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                textAlign: 'center',
+                color: '#ffffff',
             }}>
                 Resources
             </h1>
@@ -21,16 +20,16 @@ export default function ResourcesPage() {
                 {posts.map((post) => (
                     <Link href={`/resources/${post.slug}`} key={post.slug}>
                         <div className="glass-card" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-                            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{post.title}</h2>
-                            <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: '#ffffff' }}>{post.title}</h2>
+                            <p style={{ color: '#ffffff', fontSize: '0.9rem', marginBottom: '1rem' }}>
                                 {post.date}
                             </p>
-                            <p style={{ color: 'var(--text-secondary)', flex: 1 }}>
+                            <p style={{ color: '#ffffff', flex: 1 }}>
                                 {post.excerpt}
                             </p>
                             <span style={{
                                 marginTop: '1.5rem',
-                                color: 'var(--text-accent)',
+                                color: '#ffffff',
                                 fontWeight: 'bold',
                                 display: 'inline-block'
                             }}>
