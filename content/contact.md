@@ -14,4 +14,3 @@ Reach out for events, questions, or just to say hi.
 
 Email us at: **hello@youngastronomersuk.science**
 
-Or join our Discord server.
