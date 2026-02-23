@@ -2,14 +2,14 @@
 
 import Slide from './Slide';
 
-export default function SlideDeck({ slides, pageMeta }) {
+export default function SlideDeck({ slides, pageMeta, customData }) {
     const showScrollIndicator = pageMeta?.scrollIndicator !== false;
 
     return (
         <div className="snap-y snap-mandatory h-screen w-full h-[100dvh] overflow-y-scroll scroll-smooth bg-transparent text-white relative">
             {slides.map((slide, index) => (
                 <div key={index} className="snap-start min-h-[100dvh] w-full flex flex-col items-center justify-center p-6 md:p-8 py-20 relative border-b border-white/10 group">
-                    <Slide content={slide.content} meta={slide.meta} />
+                    <Slide content={slide.content} meta={slide.meta} customData={customData} />
 
                     {/* Scroll Indicator for all but last slide */}
                     {showScrollIndicator && index < slides.length - 1 && (

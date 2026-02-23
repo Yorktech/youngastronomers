@@ -3,8 +3,9 @@
 import ReactMarkdown from 'react-markdown';
 import ApodSection from './ApodSection';
 import Link from 'next/link';
+import ResourcesGrid from './ResourcesGrid';
 
-export default function Slide({ content, meta }) {
+export default function Slide({ content, meta, customData }) {
     return (
         <div className={`font-sans prose prose-invert max-w-4xl w-full text-center ${meta?.glass ? 'glass-card' : ''}`}>
             <ReactMarkdown
@@ -17,6 +18,13 @@ export default function Slide({ content, meta }) {
                             return (
                                 <div className="w-full my-8">
                                     <ApodSection />
+                                </div>
+                            );
+                        }
+                        if (children && children === 'RESOURCES_GRID') {
+                            return (
+                                <div className="w-full my-8">
+                                    <ResourcesGrid posts={customData?.posts || []} />
                                 </div>
                             );
                         }

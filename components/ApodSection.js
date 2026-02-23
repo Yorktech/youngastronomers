@@ -10,6 +10,9 @@ export default function ApodSection() {
         async function fetchApod() {
             try {
                 const res = await fetch('https://api.nasa.gov/planetary/apod?api_key=GoeoXqqfR1HQXUZpRv7TxDv3kpQPG1gdYscFO0Lr');
+                if (!res.ok) {
+                    throw new Error(`NASA API returned status ${res.status}`);
+                }
                 const data = await res.json();
                 setApodParams(data);
             } catch (error) {
