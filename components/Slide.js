@@ -28,8 +28,19 @@ export default function Slide({ content, meta, customData }) {
                                 </div>
                             );
                         }
+
+                        // Check if the only child is an image. If so, don't wrap it in a <p> tag to prevent invalid HTML warnings
+                        // ReactMarkdown sometimes passes images wrapped in paragraphs.
+                        const hasImgChild = node && node.children && node.children.some(child => child.tagName === 'img');
+                        if (hasImgChild) {
+                            return <div className="w-full flex justify-center my-8">{children}</div>;
+                        }
+
                         return <p {...props} className="text-xl text-white mb-6 leading-relaxed">{children}</p>;
                     },
+                    img: ({ node, ...props }) => (
+                        <img {...props} className="rounded-lg shadow-2xl max-h-[50vh] object-contain border border-white/10 mx-auto" />
+                    ),
                 }}
             >
                 {content}

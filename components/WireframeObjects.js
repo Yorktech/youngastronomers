@@ -6,7 +6,7 @@ import * as THREE from "three";
 
 // EliteObject: Renders a solid black mesh to occlude background, 
 // transparently overlaid with EdgesGeometry for the vector look.
-function EliteObject({ geometry, color, position, rotation, scale }) {
+export function EliteObject({ geometry, color, position, rotation, scale }) {
     const edges = useMemo(() => new THREE.EdgesGeometry(geometry), [geometry]);
 
     return (

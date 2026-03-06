@@ -1,12 +1,17 @@
 ---
 title: "History of Astronomy"
 description: "A brief history of astronomy in the UK"
-background: "nebula"
+background:
+  style: stars
+  speed: 0.1
+  telescope:
+    visible: true
+    color: "cyan"
+    scale: 1.5
+    position: [0, -4, -15]
 ---
 ***
----
-glass: true
----
+
 
 # Astronomy in the UK
 ## From the ancient to the modern
@@ -21,6 +26,8 @@ glass: true
 ## Ancient Observatories
 
 Long before telescopes were invented, ancient Britons were observing the sky. Monuments like Stonehenge, built around 2500 BC, were aligned with the movements of the sun, highlighting the solstices. This shows that tracking the heavens has been part of human culture in the UK for thousands of years.
+
+![Stonehenge under the stars](/images/stonehenge.png)
 
 ***
 ---
@@ -40,6 +47,7 @@ glass: true
 
 In 1781, while observing from his garden in Bath with a telescope of his own design, William Herschel discovered the planet Uranus. He was also the first to catalog thousands of deep-sky objects, expanding our understanding of the universe beyond the solar system.
 
+![Galaxy](/images/galaxy.jpg)
 ***
 --- 
 glass: true
