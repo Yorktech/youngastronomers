@@ -3,7 +3,8 @@ import SlideDeck from '@/components/SlideDeck';
 import { getAllPosts } from '@/lib/posts';
 
 export default function ResourcesPage() {
-    const posts = getAllPosts(['slug', 'title', 'excerpt', 'date']);
+    const posts = getAllPosts(['slug', 'title', 'excerpt', 'date', 'resource'])
+        .filter((post) => post.resource !== false);
 
     const slides = [
         {

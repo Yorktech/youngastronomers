@@ -1,5 +1,6 @@
 ---
 title: "Terms and Conditions"
+resource: false
 description: "Terms of use for Young Astronomers UK"
 ---
 

@@ -158,6 +158,7 @@ Authoring tips:
 - Keep language accessible for children while staying scientifically accurate.
 - Use `***` on its own line between slides.
 - Use slide-level frontmatter only when you need layout metadata.
+- To hide a page from the Resources list, add `resource: false` in that file's frontmatter.
 
 ## Routing Overview
 

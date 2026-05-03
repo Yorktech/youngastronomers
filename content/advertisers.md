@@ -52,6 +52,21 @@ We are open to bespoke collaborations that align with our educational values.
 glass: true
 ---
 
+# Media Pack
+
+Our media pack includes audience profile, partnership formats, placement options, and campaign support details.
+
+
+MEDIA_PACK_DIALOG
+
+[Request Full PDF Pack](mailto:hello@youngastronomersuk.science?subject=Media%20Pack%20Request)
+
+***
+
+---
+glass: true
+---
+
 # Let's Talk
 
 To request our media pack or discuss a partnership, contact us at:

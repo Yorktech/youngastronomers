@@ -8,6 +8,7 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['var(--font-space-grotesk)', 'sans-serif'],
+                display: ['var(--font-orbitron)', 'sans-serif'],
             },
         },
     },

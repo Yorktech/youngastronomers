@@ -1,5 +1,6 @@
 ---
 title: "Contact Us"
+resource: false
 description: "Get in touch"
 ---
 

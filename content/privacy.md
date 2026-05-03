@@ -1,5 +1,6 @@
 ---
 title: "Privacy Policy"
+resource: false
 description: "How we handle your data"
 ---
 

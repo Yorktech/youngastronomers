@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import ApodSection from './ApodSection';
 import Link from 'next/link';
 import ResourcesGrid from './ResourcesGrid';
+import MediaPackDialog from './MediaPackDialog';
 
 export default function Slide({ content, meta, customData }) {
     return (
@@ -11,8 +12,8 @@ export default function Slide({ content, meta, customData }) {
             <ReactMarkdown
                 components={{
                     a: ({ node, ...props }) => <Link {...props} className="text-purple-400 hover:text-purple-300 underline" />,
-                    h1: ({ node, ...props }) => <h1 {...props} className="font-sans text-5xl font-extrabold mb-6 tracking-tight" />,
-                    h2: ({ node, ...props }) => <h2 {...props} className="text-3xl font-bold mb-4 text-white" />,
+                    h1: ({ node, ...props }) => <h1 {...props} className="font-display text-5xl font-extrabold mb-6 tracking-tight" />,
+                    h2: ({ node, ...props }) => <h2 {...props} className="font-display text-3xl font-bold mb-4 text-white" />,
                     p: ({ node, children, ...props }) => {
                         if (children && children === 'APOD_SECTION') {
                             return (
@@ -25,6 +26,13 @@ export default function Slide({ content, meta, customData }) {
                             return (
                                 <div className="w-full my-8">
                                     <ResourcesGrid posts={customData?.posts || []} />
+                                </div>
+                            );
+                        }
+                        if (children && children === 'MEDIA_PACK_DIALOG') {
+                            return (
+                                <div className="w-full my-8">
+                                    <MediaPackDialog />
                                 </div>
                             );
                         }

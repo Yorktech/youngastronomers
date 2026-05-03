@@ -1,5 +1,6 @@
 ---
 title: "Young Astronomers UK"
+resource: false
 description: ""
 background:
   scrollIndicator: true

@@ -108,6 +108,7 @@
   --secondary-glow: radial-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
 
   --font-primary: var(--font-space-grotesk), sans-serif;
+  --font-display: var(--font-orbitron), sans-serif;
 }
 
 html,
@@ -140,6 +141,8 @@ body {
 .prose h1,
 .prose h2,
 .prose h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
   color: var(--text-primary);
   margin-top: 2em;
   margin-bottom: 1em;
