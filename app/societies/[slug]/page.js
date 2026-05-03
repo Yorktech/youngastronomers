@@ -1,19 +1,12 @@
-import { getPostSlugs } from '@/lib/posts';
 import { getPageContent } from '@/lib/content';
 import SlideDeck from '@/components/SlideDeck';
-import BackgroundUpdater from '@/components/BackgroundUpdater';
 import { notFound } from 'next/navigation';
+import BackgroundUpdater from '@/components/BackgroundUpdater';
 
-export async function generateStaticParams() {
-    const posts = getPostSlugs();
-    return posts.map((slug) => ({
-        slug: slug.replace(/\.md$/, ''),
-    }));
-}
-
-export default async function Post({ params }) {
+export default async function SocietiesPage({ params }) {
     const { slug } = await params;
-    const page = getPageContent(slug);
+    // Prepend 'societies/' to the slug so it looks in content/societies/
+    const page = getPageContent(`societies/${slug}`);
 
     if (!page) {
         notFound();

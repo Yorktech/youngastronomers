@@ -7,6 +7,8 @@ import { WireframePlanet, WireframeShip, RetroSun, WireframeHubble } from "./Wir
 import { useBackground } from "./BackgroundContext";
 import { Physics, RigidBody, vec3 } from "@react-three/rapier";
 import { BlackHole } from "./BlackHole";
+import { WireframeMinster } from "./YorkMinster";
+import { WireframeTelescope } from "./Telescope";
 
 function GenerateCircleTexture() {
     const size = 64;
@@ -367,6 +369,22 @@ function Scene() {
                     position={config.sun.position || [40, 20, -80]}
                     size={config.sun.size || 15}
                     color={config.sun.color || "yellow"}
+                />
+            )}
+
+            {config.minster && config.minster.visible !== false && (
+                <WireframeMinster
+                    position={config.minster.position || [0, -10, -30]}
+                    scale={config.minster.scale || 2}
+                    color={config.minster.color || "orange"}
+                />
+            )}
+
+            {config.telescope && config.telescope.visible !== false && (
+                <WireframeTelescope
+                    position={config.telescope.position || [0, -5, -20]}
+                    scale={config.telescope.scale || 1}
+                    color={config.telescope.color || "dodgerblue"}
                 />
             )}
 

@@ -1,10 +1,65 @@
 ---
 title: "Aims and Objectives"
-date: "2026-01-16"
+description: ""
 excerpt: "The concept behind the creation of a nationwide Young Astronomers organisation and our vision for the future."
+background:
+  scrollIndicator: true
+  flybys: true
+  sun:
+    visible: true
+    color: "yellow"
+    size: 20
+    position: [40, 20, -100]
+  planets:
+    - color: "cyan"
+      size: 5
+      position: [-30, -10, -50]
+      speed: 0.1
+    - color: "#ff6347"
+      size: 8
+      position: [35, -25, -30]
+      speed: 0.2
+  ships:
+    - type: "hubble"
+      position: [-25, 10, -30]
+      scale: 0.8
+      color: "lime"
+      orbit:
+        radius: 35
+        speed: 0.2
+        axis: "x"
+        center: [0,0,-40]
+
+    - type: "basic"
+      position: [0, 0, 0]
+      rotation: [0.5, 0.2, 0]
+      color: "magenta"
+      orbit:
+        radius: 20
+        speed: 0.3
+        axis: "y"
+        center: [0,0,-40]
+
+    - type: "cobra"
+      position: [10, -5, -20]
+      rotation: [0, 0, 0]
+      color: "orange"
+      orbit:
+        radius: 25
+        speed: 0.15
+        axis: "y"
+        center: [0,0,-40]
 ---
 
 # Young Astronomers - Aims and Objectives
+
+***
+---
+glass: true
+---
+
+
+
 
 The concept behind the creation of a nationwide **Young Astronomers** organisation was born from a desire to encourage the participation of today’s youth in astronomy, in an ongoing attempt to try and attract youngsters into local astronomical societies, many of which have ageing memberships. Without an increase of younger members, the long term sustainability of the astronomical society as we know it is under threat; the ultimate survival rate – if not challenged and addressed – will ultimately result in a large number of societies ceasing to exist.
 
@@ -29,3 +84,4 @@ Typical objectives of Young Astronomers UK are:
 *   Assisting and advising groups who may want to apply for charitable status
 *   Helping and advising how groups can obtain funding
 *   To contact similar organisations to ourselves with a view to exchanging ideas
+***
