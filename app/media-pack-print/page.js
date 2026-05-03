@@ -9,6 +9,7 @@ export const metadata = {
 export default function MediaPackPrintPage() {
   return (
     <main className={styles.page}>
+      <style>{`nav, footer { display: none !important; }`}</style>
       <div className={styles.toolbar}>
         <CloseMediaPackButton />
       </div>

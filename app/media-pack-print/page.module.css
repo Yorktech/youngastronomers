@@ -4,11 +4,6 @@
   color: #101322;
 }
 
-:global(nav),
-:global(footer) {
-  display: none !important;
-}
-
 .toolbar {
   max-width: 960px;
   margin: 0 auto 0.8rem;
