@@ -1,36 +1,189 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Young Astronomers UK Website
 
-## Getting Started
+Young Astronomers UK is a content-driven website designed to inspire children and young people to explore astronomy and science.
 
-First, run the development server:
+The project focuses on:
+- A vibrant, useful resource for parents, children, and educators.
+- A distinctive Elite wireframe + retro visual style.
+- Slide-based page experiences authored in Markdown.
+
+For contributor and agent rules, read AGENTS.md in the repository root.
+
+## Tech Stack
+
+- Next.js App Router
+- React 19
+- Tailwind CSS
+- gray-matter for frontmatter parsing
+- react-markdown for markdown rendering (resource-style pages)
+
+## Local Development
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open:
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+```text
+http://localhost:8001
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+- `npm run dev` starts development server on port `8001`.
+- `npm run build` creates a production build.
+- `npm run start` runs the production server.
+- `npm run lint` runs ESLint.
 
-To learn more about Next.js, take a look at the following resources:
+## Content Model
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Most site pages are authored in Markdown under `content/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Slide parsing behavior:
+- Files are parsed by `lib/content.js`.
+- Slides are split on a line containing only `***`.
+- File-level frontmatter is supported.
+- Slide-level frontmatter is also supported inside each slide block.
 
-## Deploy on Vercel
+Example slide file pattern:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```md
+---
+title: Example Page
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Slide 1
+Intro text.
+
+***
+
+---
+align: center
+---
+
+# Slide 2
+More content.
+```
+
+## Content Authoring Cheat Sheet
+
+Use these templates when creating new slide-based pages.
+
+General content page template:
+
+File location:
+- `content/<slug>.md`
+
+Route:
+- `/<slug>`
+
+Template:
+
+```md
+---
+title: Page Title
+description: One-line summary for this page
+background:
+	theme: stars
+---
+
+# Slide 1
+
+Start with a clear, engaging intro for young learners.
+
+***
+
+---
+align: center
+---
+
+# Slide 2
+
+Add one core idea with a simple example.
+
+***
+
+# Slide 3
+
+End with a takeaway or question to explore.
+```
+
+Science page template:
+
+File location:
+- `content/science/<slug>.md`
+
+Route:
+- `/science/<slug>`
+
+Template:
+
+```md
+---
+title: Science Topic Title
+description: Child-friendly summary of this science topic
+background:
+	theme: nebula
+---
+
+# What Is It?
+
+Define the topic in plain, age-appropriate language.
+
+***
+
+# How It Works
+
+Explain the process in short steps.
+
+***
+
+# Try This
+
+Give a safe activity, prompt, or observation task.
+```
+
+Authoring tips:
+- Keep one big idea per slide.
+- Use short paragraphs and clear headings.
+- Keep language accessible for children while staying scientifically accurate.
+- Use `***` on its own line between slides.
+- Use slide-level frontmatter only when you need layout metadata.
+
+## Routing Overview
+
+- `app/page.js` loads the home experience from `content/landing.md`.
+- `app/[slug]/page.js` loads generic slide pages from `content/<slug>.md`.
+- `app/science/[slug]/page.js` loads science slide pages from `content/science/<slug>.md`.
+- `app/resources/[slug]/page.js` renders markdown article style content.
+
+## Core Components
+
+- `components/SlideDeck.js` handles full-screen vertical slide snapping.
+- `components/Slide.js` renders each slide's markdown and metadata.
+- `components/Starfield.js`, `components/WireframeObjects.js`, and `components/BlackHole.js` support the visual identity.
+- `components/BackgroundUpdater.js` applies per-page background configuration.
+
+## Contribution Notes
+
+- Prefer content updates in `content/` over hardcoded text in React components.
+- Preserve slide boundaries (`***`) and existing route behavior.
+- Keep the retro wireframe identity intact.
+- Verify readability over animated backgrounds.
+- Run `npm run lint` for meaningful code changes.
+
+## Quick Validation
+
+Before finalizing changes:
+- Confirm main routes render correctly.
+- Check slide scrolling behavior on at least one desktop and one mobile viewport.
+- Verify Markdown parsing still supports frontmatter and `***` splits.
