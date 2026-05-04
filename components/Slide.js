@@ -7,8 +7,13 @@ import ResourcesGrid from './ResourcesGrid';
 import MediaPackDialog from './MediaPackDialog';
 
 export default function Slide({ content, meta, customData }) {
+    const align = meta?.align === 'left' || meta?.align === 'right' ? meta.align : 'center';
+    const textAlignClass = align === 'left' ? 'text-left' : align === 'right' ? 'text-right' : 'text-center';
+    const imageAlignClass = align === 'left' ? 'justify-start' : align === 'right' ? 'justify-end' : 'justify-center';
+    const imageMarginClass = align === 'left' ? 'mr-auto' : align === 'right' ? 'ml-auto' : 'mx-auto';
+
     return (
-        <div className={`font-sans prose prose-invert max-w-4xl w-full text-center ${meta?.glass ? 'glass-card' : ''}`}>
+        <div className={`font-sans prose prose-invert max-w-4xl w-full ${textAlignClass} ${meta?.glass ? 'glass-card' : ''}`}>
             <ReactMarkdown
                 components={{
                     a: ({ node, ...props }) => <Link {...props} className="text-purple-400 hover:text-purple-300 underline" />,
@@ -41,13 +46,13 @@ export default function Slide({ content, meta, customData }) {
                         // ReactMarkdown sometimes passes images wrapped in paragraphs.
                         const hasImgChild = node && node.children && node.children.some(child => child.tagName === 'img');
                         if (hasImgChild) {
-                            return <div className="w-full flex justify-center my-8">{children}</div>;
+                            return <div className={`w-full flex ${imageAlignClass} my-8`}>{children}</div>;
                         }
 
                         return <p {...props} className="text-xl text-white mb-6 leading-relaxed">{children}</p>;
                     },
                     img: ({ node, ...props }) => (
-                        <img {...props} className="rounded-lg shadow-2xl max-h-[50vh] object-contain border border-white/10 mx-auto" />
+                        <img {...props} className={`rounded-lg shadow-2xl max-h-[50vh] object-contain border border-white/10 ${imageMarginClass}`} />
                     ),
                 }}
             >
