@@ -53,6 +53,7 @@ export default async function Navbar() {
                     </div>
 
                     <Link href="/resources" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Resources</Link>
+                    <Link href="/places-to-visit" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Places to Visit</Link>
                     <Link href="/advertisers" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Advertisers</Link>
                     <Link href="/contact" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Contact</Link>
                  
