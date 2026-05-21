@@ -53,7 +53,26 @@ export default async function Navbar() {
                     </div>
 
                     <Link href="/resources" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Resources</Link>
-                    <Link href="/places-to-visit" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Places to Visit</Link>
+
+                    <div className="relative group">
+                        <span className="text-white/80 group-hover:text-white group-hover:text-shadow-glow transition-all text-sm md:text-lg font-medium flex items-center gap-1 cursor-default">
+                            Places to Visit <ChevronDown className="w-4 h-4 md:w-5 md:h-5" />
+                        </span>
+                        <div className="absolute top-full left-0 pt-2 hidden group-hover:block z-50">
+                            <div className="flex flex-col bg-black/80 backdrop-blur-md rounded-md p-2 min-w-[220px] shadow-lg border border-white/10">
+                                <Link href="/days-out" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Days Out
+                                </Link>
+                                <Link href="/dark-sky-sites" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Dark Sky Sites
+                                </Link>
+                                <Link href="/events" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Events
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+
                     <Link href="/advertisers" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Advertisers</Link>
                     <Link href="/contact" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm md:text-lg font-medium">Contact</Link>
                  
