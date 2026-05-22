@@ -164,7 +164,6 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                         </div>
                         {openSection === 'science' && (
                             <div className="pl-4 pb-1 space-y-1">
-                                <Link href="/science" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">All Science</Link>
                                 {sciencePages.map((page) => (
                                     <Link key={page.slug} href={page.path} onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">
                                         {page.title}
