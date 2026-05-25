@@ -2,6 +2,7 @@ import Link from 'next/link';
 
 import { Orbitron, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import 'katex/dist/katex.min.css';
 import Starfield from "@/components/Starfield";
 import Footer from "@/components/Footer";
 import { BackgroundProvider } from "@/components/BackgroundContext";

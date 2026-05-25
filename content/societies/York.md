@@ -21,6 +21,8 @@ Welcome to the York branch of Young Astronomers!
 glass: true
 ---
 
+# Our Goal
+
 With science having a greater impact on today’s younger generation, it is vital that the subjects of astronomy and space exploration are not left standing. With this in mind, York Young Astronomers was initially conceived in late-2025 with a view to encouraging the participation of the younger generation of the York area in the world of astronomy and space exploration.
 
 

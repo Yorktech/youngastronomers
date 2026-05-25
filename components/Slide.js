@@ -1,6 +1,8 @@
 'use client';
 
 import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import ApodSection from './ApodSection';
 import Link from 'next/link';
 import ResourcesGrid from './ResourcesGrid';
@@ -15,6 +17,8 @@ export default function Slide({ content, meta, customData }) {
     return (
         <div className={`font-sans prose prose-invert max-w-4xl w-full ${textAlignClass} ${meta?.glass ? 'glass-card' : ''}`}>
             <ReactMarkdown
+                remarkPlugins={[remarkMath]}
+                rehypePlugins={[rehypeKatex]}
                 components={{
                     a: ({ node, ...props }) => <Link {...props} className="text-purple-400 hover:text-purple-300 underline" />,
                     h1: ({ node, ...props }) => <h1 {...props} className="font-display text-5xl font-extrabold mb-6 tracking-tight" />,
