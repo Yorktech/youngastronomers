@@ -1,5 +1,5 @@
 ---
-title: Norman Lockyer Observatory Astroscouts (Sidmouth, Devon)
+title: Norman Lockyer Observatory Astroscouts
 background:
   style: stars
   starCount: 500
@@ -11,7 +11,8 @@ background:
 glass: true
 ---
 
-## Norman Lockyer Observatory Astroscouts (Sidmouth, Devon)
+## Norman Lockyer Observatory Astroscouts 
+## (Sidmouth, Devon)
 
 
 The Norman Lockyer Observatory run a young observer group called the Astroscouts which operates as a single group, but when appropriate the group is divided into two sections – Junior Astroscouts (aged 8 to 12/13) and the Youth Group (aged 14 to 16/18).
