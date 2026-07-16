@@ -116,9 +116,24 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                             </div>
                         </div>
                     </div>
-
-                    <Link href="/advertisers" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm lg:text-lg font-medium">Advertisers</Link>
-                    <Link href="/contact" className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm lg:text-lg font-medium">Contact</Link>
+                    <div className="relative group">
+                        <span className="text-white/80 group-hover:text-white group-hover:text-shadow-glow transition-all text-sm lg:text-lg font-medium flex items-center gap-1 cursor-default">
+                            Information <ChevronDown className="w-4 h-4 lg:w-5 lg:h-5" />
+                        </span>
+                        <div className="absolute top-full left-0 pt-2 hidden group-hover:block z-50">
+                            <div className="flex flex-col bg-black/80 backdrop-blur-md rounded-md p-2 min-w-[220px] shadow-lg border border-white/10">
+                                <Link href="/advertisers" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Advertisers
+                                </Link>
+                                <Link href="/contact" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Contact
+                                </Link>
+                                <Link href="/officers" className="text-white/80 hover:text-white hover:bg-white/10 px-3 py-2 rounded transition-all text-sm md:text-base">
+                                    Officers
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -132,61 +147,70 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                     />
                     <div id="mobile-main-menu" className="relative z-50 mt-3 px-4">
                         <div className="rounded-lg border border-white/15 bg-black/90 backdrop-blur-md p-3 font-display space-y-2">
-                        <Link href="/" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Home</Link>
+                            <Link href="/" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Home</Link>
 
-                        <button type="button" onClick={() => toggleSection('societies')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
-                            <span>Societies</span>
-                            <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'societies' ? 'rotate-180' : ''}`} />
-                        </button>
-                        {openSection === 'societies' && (
-                            <div className="pl-4 pb-1 space-y-1">
-                                {societiesPages.map((page) => (
-                                    <Link key={page.slug} href={page.path} onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">
-                                        {page.title}
-                                    </Link>
-                                ))}
-                            </div>
-                        )}
-
-                        <div className="flex items-center gap-1">
-                            <Link href="/science" onClick={closeMobileMenu} className="flex-1 px-3 py-2 rounded text-white/90 hover:bg-white/10">
-                                Science
-                            </Link>
-                            <button
-                                type="button"
-                                onClick={() => toggleSection('science')}
-                                className="px-3 py-2 rounded text-white/90 hover:bg-white/10"
-                                aria-label="Toggle Science submenu"
-                                aria-expanded={openSection === 'science'}
-                            >
-                                <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'science' ? 'rotate-180' : ''}`} />
+                            <button type="button" onClick={() => toggleSection('societies')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
+                                <span>Societies</span>
+                                <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'societies' ? 'rotate-180' : ''}`} />
                             </button>
-                        </div>
-                        {openSection === 'science' && (
-                            <div className="pl-4 pb-1 space-y-1">
-                                {sciencePages.map((page) => (
-                                    <Link key={page.slug} href={page.path} onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">
-                                        {page.title}
-                                    </Link>
-                                ))}
-                            </div>
-                        )}
+                            {openSection === 'societies' && (
+                                <div className="pl-4 pb-1 space-y-1">
+                                    {societiesPages.map((page) => (
+                                        <Link key={page.slug} href={page.path} onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">
+                                            {page.title}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
 
-                        <button type="button" onClick={() => toggleSection('places')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
-                            <span>Places to Visit</span>
-                            <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'places' ? 'rotate-180' : ''}`} />
-                        </button>
-                        {openSection === 'places' && (
-                            <div className="pl-4 pb-1 space-y-1">
-                                <Link href="/days-out" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Days Out</Link>
-                                <Link href="/dark-sky-sites" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Dark Sky Sites</Link>
-                                <Link href="/events" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Events</Link>
+                            <div className="flex items-center gap-1">
+                                <Link href="/science" onClick={closeMobileMenu} className="flex-1 px-3 py-2 rounded text-white/90 hover:bg-white/10">
+                                    Science
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => toggleSection('science')}
+                                    className="px-3 py-2 rounded text-white/90 hover:bg-white/10"
+                                    aria-label="Toggle Science submenu"
+                                    aria-expanded={openSection === 'science'}
+                                >
+                                    <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'science' ? 'rotate-180' : ''}`} />
+                                </button>
                             </div>
-                        )}
+                            {openSection === 'science' && (
+                                <div className="pl-4 pb-1 space-y-1">
+                                    {sciencePages.map((page) => (
+                                        <Link key={page.slug} href={page.path} onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">
+                                            {page.title}
+                                        </Link>
+                                    ))}
+                                </div>
+                            )}
 
-                        <Link href="/resources" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Resources</Link>
-                        <Link href="/advertisers" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Advertisers</Link>
-                        <Link href="/contact" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Contact</Link>
+                            <button type="button" onClick={() => toggleSection('places')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
+                                <span>Places to Visit</span>
+                                <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'places' ? 'rotate-180' : ''}`} />
+                            </button>
+                            {openSection === 'places' && (
+                                <div className="pl-4 pb-1 space-y-1">
+                                    <Link href="/days-out" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Days Out</Link>
+                                    <Link href="/dark-sky-sites" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Dark Sky Sites</Link>
+                                    <Link href="/events" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Events</Link>
+                                </div>
+                            )}
+
+                            <Link href="/resources" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Resources</Link>
+                            <button type="button" onClick={() => toggleSection('info')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
+                                <span>Information</span>
+                                <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'info' ? 'rotate-180' : ''}`} />
+                            </button>
+                            {openSection === 'info' && (
+                                <div className="pl-4 pb-1 space-y-1">
+                                    <Link href="/advertisers" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Advertisers</Link>
+                                    <Link href="/contact" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Contact</Link>
+                                    <Link href="/officers" onClick={closeMobileMenu} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Officers</Link>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

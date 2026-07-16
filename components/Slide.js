@@ -2,6 +2,7 @@
 
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
+import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import ApodSection from './ApodSection';
 import Link from 'next/link';
@@ -17,7 +18,7 @@ export default function Slide({ content, meta, customData }) {
     return (
         <div className={`font-sans prose prose-invert max-w-4xl w-full ${textAlignClass} ${meta?.glass ? 'glass-card' : ''}`}>
             <ReactMarkdown
-                remarkPlugins={[remarkMath]}
+                remarkPlugins={[remarkMath, remarkGfm]}
                 rehypePlugins={[rehypeKatex]}
                 components={{
                     a: ({ node, ...props }) => <Link {...props} className="text-purple-400 hover:text-purple-300 underline" />,
@@ -58,6 +59,16 @@ export default function Slide({ content, meta, customData }) {
                     img: ({ node, ...props }) => (
                         <img {...props} className={`rounded-lg shadow-2xl max-h-[50vh] object-contain border border-white/10 ${imageMarginClass}`} />
                     ),
+                    table: ({ node, ...props }) => (
+                        <div className="overflow-x-auto my-8">
+                            <table {...props} className="w-full border-collapse border border-white/15 text-left text-base md:text-lg" />
+                        </div>
+                    ),
+                    thead: ({ node, ...props }) => <thead {...props} className="bg-white/5 text-white border-b border-white/15" />,
+                    tbody: ({ node, ...props }) => <tbody {...props} className="divide-y divide-white/10" />,
+                    tr: ({ node, ...props }) => <tr {...props} className="hover:bg-white/5 transition-colors" />,
+                    th: ({ node, ...props }) => <th {...props} className="p-4 font-display font-semibold text-white border-r border-white/15 last:border-r-0" />,
+                    td: ({ node, ...props }) => <td {...props} className="p-4 border-r border-white/10 last:border-r-0 text-white/80 leading-relaxed" />,
                 }}
             >
                 {content}
