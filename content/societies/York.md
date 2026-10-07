@@ -29,7 +29,7 @@ With science having a greater impact on today’s younger generation, it is vita
 By inspiring and educating the next generation, we will invite the young astronomers of York not just to take part in the activities of the society but eventually, should they so wish, to play an active role in how the society is run.
 
 
-The first meeting of York Young Astronomers will take place in September 2026 at Beetle Bank Farm, Moor Lane, Murton, York, YO19 5XD, when the audience will be entertained by Brad Gibson who will tell us all about The 10 Coolest Things in Outer Space. More details about the event will be announced here in due course . . . so, watch this space . . .
+The first meeting of York Young Astronomers will take place on 23rd October 2026 at Beetle Bank Farm, Moor Lane, Murton, York, YO19 5XD, when the audience will be entertained by Brad Gibson who will tell us all about The 10 Coolest Things in Outer Space. More details about the event will be announced here in due course . . . so, watch this space . . .
 
 For more details contact Brian at stars@starlight-nights.co.uk
 
