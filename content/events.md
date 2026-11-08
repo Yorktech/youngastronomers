@@ -15,12 +15,6 @@ align: left
 
 Discover public talks, observing sessions, and community astronomy events.
 
-***
-
----
-glass: true
-align: left
----
 # Want Your Event Listed?
 
 Email event details to:
@@ -28,8 +22,5 @@ Email event details to:
 **hello@youngastronomersuk.science**
 
 Include date, venue, audience age, and booking link.
-
-
-***
 
 

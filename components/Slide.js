@@ -21,7 +21,18 @@ export default function Slide({ content, meta, customData }) {
                 remarkPlugins={[remarkMath, remarkGfm]}
                 rehypePlugins={[rehypeKatex]}
                 components={{
-                    a: ({ node, ...props }) => <Link {...props} className="text-purple-400 hover:text-purple-300 underline" />,
+                    a: ({ node, href = '', ...props }) => {
+                        const isExternal = href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//');
+                        return (
+                            <Link
+                                href={href}
+                                {...props}
+                                target={isExternal ? '_blank' : props.target}
+                                rel={isExternal ? 'noopener noreferrer' : props.rel}
+                                className="text-purple-400 hover:text-purple-300 underline"
+                            />
+                        );
+                    },
                     h1: ({ node, ...props }) => <h1 {...props} className="font-display text-5xl font-extrabold mb-6 tracking-tight" />,
                     h2: ({ node, ...props }) => <h2 {...props} className="font-display text-3xl font-bold mb-4 text-white" />,
                     p: ({ node, children, ...props }) => {

@@ -143,6 +143,8 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                         )}
                     </div>
 
+                    <Link href="/getting-the-right-telescope" onClick={closeAllMenus} className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm lg:text-lg font-medium">Telescopes</Link>
+
                     <Link href="/resources" onClick={closeAllMenus} className="text-white/80 hover:text-white hover:text-shadow-glow transition-all text-sm lg:text-lg font-medium">Resources</Link>
 
                     <div className="relative group desktop-dropdown-container">
@@ -245,6 +247,9 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                                 </div>
                             )}
 
+                            <Link href="/getting-the-right-telescope" onClick={closeAllMenus} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Telescopes</Link>
+                            <Link href="/resources" onClick={closeAllMenus} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Resources</Link>
+
                             <button type="button" onClick={() => toggleSection('places')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
                                 <span>Places to Visit</span>
                                 <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'places' ? 'rotate-180' : ''}`} />
@@ -256,8 +261,6 @@ export default function NavbarClient({ societiesPages, sciencePages }) {
                                     <Link href="/events" onClick={closeAllMenus} className="block px-3 py-2 rounded text-white/80 hover:bg-white/10">Events</Link>
                                 </div>
                             )}
-
-                            <Link href="/resources" onClick={closeAllMenus} className="block px-3 py-2 rounded text-white/90 hover:bg-white/10">Resources</Link>
                             <button type="button" onClick={() => toggleSection('info')} className="w-full flex items-center justify-between px-3 py-2 rounded text-white/90 hover:bg-white/10">
                                 <span>Information</span>
                                 <ChevronDown className={`h-4 w-4 transition-transform ${openSection === 'info' ? 'rotate-180' : ''}`} />
