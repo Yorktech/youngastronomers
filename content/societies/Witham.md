@@ -1,5 +1,5 @@
 ---
-title: Withham Young Astronomers
+title: Essex (Witham) North Essex Astronomical Society Young Astronomers Club
 background:
   style: stars
   starCount: 500
