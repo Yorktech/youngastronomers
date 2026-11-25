@@ -7,8 +7,8 @@ background:
 ---
 
 ---
-
-## glass: true
+glass: true
+---
 
 ## North Essex Astronomical Society’s Young Astronomers Club (Witham, Essex)
 
@@ -22,4 +22,4 @@ Each session costs £5 per child and includes a squash drink. Tea and coffee are
 
 For further details please contact northessexastro@gmail.com
 
----
+***
